@@ -1,0 +1,10 @@
+Alps-MP-V0.9.9
+---major version id: 0
+---minor version id: 9
+---stage version id: 9
+---system information:  Calterah_Radar_System
+
+Release Commit ID : 72e1c348198bc2a9e0b82d262f0e2f0b21bc233f (Alps-MP-V0.9.9)
+Release Date :   Tue Sep 29 12:57:50 2020 +0800
+
+================================================================

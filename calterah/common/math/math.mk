@@ -1,0 +1,48 @@
+CALTERAH_MATH_ROOT = $(CALTERAH_COMMON_ROOT)/math
+
+CALTERAH_MATH_CSRCDIR = $(CALTERAH_MATH_ROOT)
+CALTERAH_MATH_ASMSRCDIR = $(CALTERAH_MATH_ROOT)
+
+# find all the source files in the target directories
+CALTERAH_MATH_CSRCS = $(call get_csrcs, $(CALTERAH_MATH_CSRCDIR))
+CALTERAH_MATH_ASMSRCS = $(call get_asmsrcs, $(CALTERAH_MATH_ASMSRCDIR))
+
+# get object files
+CALTERAH_MATH_COBJS = $(call get_relobjs, $(CALTERAH_MATH_CSRCS))
+CALTERAH_MATH_ASMOBJS = $(call get_relobjs, $(CALTERAH_MATH_ASMSRCS))
+CALTERAH_MATH_OBJS = $(CALTERAH_MATH_COBJS) $(CALTERAH_MATH_ASMOBJS)
+
+# get dependency files
+CALTERAH_MATH_DEPS = $(call get_deps, $(CALTERAH_MATH_OBJS))
+
+
+# genearte library
+CALTERAH_MATH_LIB = $(OUT_DIR)/lib_calterah_math.a
+
+COMMON_COMPILE_PREREQUISITES += $(CALTERAH_MATH_ROOT)/math.mk
+
+# library generation rule
+$(CALTERAH_MATH_LIB): $(CALTERAH_MATH_OBJS)
+	$(TRACE_ARCHIVE)
+	$(Q)$(AR) $(AR_OPT) $@ $(CALTERAH_MATH_OBJS)
+
+# specific compile rules
+# user can add rules to compile this library
+# if not rules specified to this library, it will use default compiling rules
+.SECONDEXPANSION:
+$(CALTERAH_MATH_COBJS): $(OUT_DIR)/%.o : %.c $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(COMPILE_OPT) $< -o $@
+
+.SECONDEXPANSION:
+$(CALTERAH_MATH_ASMOBJS): $(OUT_DIR)/%.o : %.s $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(ASM_OPT) $< -o $@
+
+CALTERAH_COMMON_CSRC += $(CALTERAH_MATH_CSRCS)
+CALTERAH_COMMON_ASMSRCS += $(CALTERAH_MATH_ASMSRCS)
+
+CALTERAH_COMMON_COBJS += $(CALTERAH_MATH_COBJS)
+CALTERAH_COMMON_ASMOBJS += $(CALTERAH_MATH_ASMOBJS)
+
+CALTERAH_COMMON_LIBS += $(CALTERAH_MATH_LIB)

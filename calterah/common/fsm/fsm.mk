@@ -1,0 +1,48 @@
+CALTERAH_FSM_ROOT = $(CALTERAH_COMMON_ROOT)/fsm
+
+CALTERAH_FSM_CSRCDIR = $(CALTERAH_FSM_ROOT)
+CALTERAH_FSM_ASMSRCDIR = $(CALTERAH_FSM_ROOT)
+
+# find all the source files in the target directories
+CALTERAH_FSM_CSRCS = $(call get_csrcs, $(CALTERAH_FSM_CSRCDIR))
+CALTERAH_FSM_ASMSRCS = $(call get_asmsrcs, $(CALTERAH_FSM_ASMSRCDIR))
+
+# get object files
+CALTERAH_FSM_COBJS = $(call get_relobjs, $(CALTERAH_FSM_CSRCS))
+CALTERAH_FSM_ASMOBJS = $(call get_relobjs, $(CALTERAH_FSM_ASMSRCS))
+CALTERAH_FSM_OBJS = $(CALTERAH_FSM_COBJS) $(CALTERAH_FSM_ASMOBJS)
+
+# get dependency files
+CALTERAH_FSM_DEPS = $(call get_deps, $(CALTERAH_FSM_OBJS))
+
+
+# genearte library
+CALTERAH_FSM_LIB = $(OUT_DIR)/lib_calterah_fsm.a
+
+COMMON_COMPILE_PREREQUISITES += $(CALTERAH_FSM_ROOT)/fsm.mk
+
+# library generation rule
+$(CALTERAH_FSM_LIB): $(CALTERAH_FSM_OBJS)
+	$(TRACE_ARCHIVE)
+	$(Q)$(AR) $(AR_OPT) $@ $(CALTERAH_FSM_OBJS)
+
+# specific compile rules
+# user can add rules to compile this library
+# if not rules specified to this library, it will use default compiling rules
+.SECONDEXPANSION:
+$(CALTERAH_FSM_COBJS): $(OUT_DIR)/%.o : %.c $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(COMPILE_OPT) $< -o $@
+
+.SECONDEXPANSION:
+$(CALTERAH_FSM_ASMOBJS): $(OUT_DIR)/%.o : %.s $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(ASM_OPT) $< -o $@
+
+CALTERAH_COMMON_CSRC += $(CALTERAH_FSM_CSRCS)
+CALTERAH_COMMON_ASMSRCS += $(CALTERAH_FSM_ASMSRCS)
+
+CALTERAH_COMMON_COBJS += $(CALTERAH_FSM_COBJS)
+CALTERAH_COMMON_ASMOBJS += $(CALTERAH_FSM_ASMOBJS)
+
+CALTERAH_COMMON_LIBS += $(CALTERAH_FSM_LIB)

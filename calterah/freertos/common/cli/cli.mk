@@ -1,0 +1,48 @@
+FREERTOS_CLI_ROOT = $(FREERTOS_COMMON_ROOT)/cli
+
+FREERTOS_CLI_CSRCDIR += $(FREERTOS_CLI_ROOT)
+
+# find all the source files in the target directories
+FREERTOS_CLI_CSRCS = $(call get_csrcs, $(FREERTOS_CLI_CSRCDIR))
+FREERTOS_CLI_ASMSRCS = $(call get_asmsrcs, $(FREERTOS_CLI_ASMSRCDIR))
+
+# get object files
+FREERTOS_CLI_COBJS = $(call get_relobjs, $(FREERTOS_CLI_CSRCS))
+FREERTOS_CLI_ASMOBJS = $(call get_relobjs, $(FREERTOS_CLI_ASMSRCS))
+FREERTOS_CLI_OBJS = $(FREERTOS_CLI_COBJS) $(FREERTOS_CLI_ASMOBJS)
+
+# get dependency files
+FREERTOS_CLI_DEPS = $(call get_deps, $(FREERTOS_CLI_OBJS))
+
+
+# genearte library
+FREERTOS_CLI_LIB = $(OUT_DIR)/lib_freertos_cli.a
+
+COMMON_COMPILE_PREREQUISITES += $(FREERTOS_CLI_ROOT)/cli.mk
+
+# library generation rule
+$(FREERTOS_CLI_LIB): $(FREERTOS_CLI_OBJS)
+	$(TRACE_ARCHIVE)
+	$(Q)$(AR) $(AR_OPT) $@ $(FREERTOS_CLI_OBJS)
+
+# specific compile rules
+# user can add rules to compile this library
+# if not rules specified to this library, it will use default compiling rules
+.SECONDEXPANSION:
+$(FREERTOS_CLI_COBJS): $(OUT_DIR)/%.o : %.c $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(COMPILE_OPT) $< -o $@
+
+.SECONDEXPANSION:
+$(FREERTOS_CLI_ASMOBJS): $(OUT_DIR)/%.o : %.s $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(ASM_OPT) $< -o $@
+
+CALTERAH_COMMON_CSRC += $(FREERTOS_CLI_CSRCS)
+CALTERAH_COMMON_ASMSRCS += $(FREERTOS_CLI_ASMSRCS)
+
+CALTERAH_COMMON_COBJS += $(FREERTOS_CLI_COBJS)
+CALTERAH_COMMON_ASMOBJS += $(FREERTOS_CLI_ASMOBJS)
+
+CALTERAH_COMMON_LIBS += $(FREERTOS_CLI_LIB)
+CALTERAH_INC_DIR += $(FREERTOS_CLI_CSRCDIR)

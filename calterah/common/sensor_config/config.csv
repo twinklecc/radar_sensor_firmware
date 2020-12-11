@@ -1,0 +1,149 @@
+Name,Type,Size,Value,Comment,CModel
+fmcw_startfreq,double,1,78.5,start frequency in GHz,fc
+fmcw_bandwidth,double,1,300,bandwidth in MHz,B
+fmcw_chirp_rampup,float,1,25,chirp ramp up time in us,Tu
+fmcw_chirp_down,float,1,3,chirp ramp down time in us,Td
+fmcw_chirp_period,float,1,30,chirp period in us,Tr
+nchirp,int32_t,1,256,num of chirps per frame,nchirp_per_frame
+adc_freq,uint32_t,1,20,ADC sampling freq in MHz,Fs
+dec_factor,uint32_t,1,1,,DFE_dec_filt_factor
+adc_sample_start,float,1,4,chirp sampling start offset in us,chirp_start_backoff
+adc_sample_end,float,1,35,chirp sampling end offset in us,chirp_end_backoff
+tx_groups,uint32_t,MAX_NUM_TX,"0x0000,0x0000,0x0001,0x0000","each element in tx_groups denotes the tx_antenna work state in four-chirp period. First nibble (LSB) denotes the first chirp, forth nibble denotes the forth chirp. Nibble value: 0:off, 1: in phase,  2: opposite phase, 3 and above: reserved",NA
+rng_win,char,16,cheb,range window type: cheb or square,FFT2DEngine_rng_window_type
+vel_win,char,16,cheb,velocity window type: cheb or square,FFT2DEngine_vel_window_type
+rng_win_params,float,3,"80,0, 0",range window parameters,FFT2DEngine_rng_window_params
+vel_win_params,float,3,"80,0,0",velocity window parameters,FFT2DEngine_vel_window_params
+rng_nfft,uint32_t,1,512,FFT size of range gate,
+vel_nfft,uint32_t,1,256,FFT size of Doppler gate,
+rng_fft_scalar,uint32_t,1,2047,FFT scaling control of range gate FFT,FFT_scaling_mask1
+vel_fft_scalar,uint32_t,1,1023,FFT scaling control of velocity gate FFT,FFT_scaling_mask2
+fft_nve_bypass,bool,1,FALSE,FFT NVE mode,NVE_bypass
+fft_nve_shift,uint32_t,1,0,FFT NVE more shift,NVE_more_shift
+fft_nve_ch_mask,uint32_t,1,65535,FFT NVE channel mask,NVE_channel_mask
+fft_nve_default_value,float,1,0.0001,"FFT NVE default value, take effect only when NVE is bypassed",NVE_default_value
+cfar_pk_en,uint32_t,1,0xFF,peak enabler bit mask,
+cfar_pk_win_size1,uint32_t,CFAR_MAX_GRP_NUM,"3,3,3,3,3,3,3,3",peak detector sliding window size1,CFAR_region_peak_win_size1
+cfar_pk_win_size2,uint32_t,CFAR_MAX_GRP_NUM,"3,3,3,3,3,3,3,3",peak detector sliding window size2,CFAR_region_peak_win_size2
+cfar_pk_threshold,uint32_t,CFAR_MAX_GRP_NUM,"31,31,31,31,31,31,31,31","exponent threshold for CUT to be considered as object candidate. The larger the value, the lower the threshold is. maximum value is 31",CFAR_region_peak_exp_thres
+cfar_sliding_win,uint32_t,1,0,"CFAR sliding window type, 0: retangle, 1: cross",
+cfar_recwin_decimate,uint32_t,1,0,"decimating scheme for rectangle window, 00b: no decimation, 10b: dopper, 01b: range, 11b: both dimensions",
+cfar_recwin_msk,uint32_t,CFAR_MAX_RECWIN_MSK_LEN,"0x7FF,0x401,0x401,0x401,0x401,0x401,0x401,0x401,0x401,0x401,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x3FE,0x202,0x202,0x202,0x202,0x202,0x202,0x202,0x202,0x202,0x3FE,0x3FE,0x3FE,0x3FE,0x3FE,0x3FE,0x3FE,0x3FE,0x3FE,0x3FE,0x3FE,0x3FE,0x1FC,0x104,0x104,0x104,0x104,0x104,0x104,0x104,0x104,0x104,0x104,0x1FC,0x1FC,0x1FC,0x1FC,0x1FC,0x1FC,0x1FC,0x1FC,0x1FC,0x1FC,0x1FC,0x7FF,0x202,0x202,0x202,0x202,0x202,0x202,0x202,0x202,0x202,0x7FF,0x000,0x3FE,0x202,0x202,0x202,0x202,0x202,0x202,0x202,0x3FE,0x000",Rectangular Window mask. 11x8 elements in total. First 11 elements defines the rectangular mask for first region. 2nd 11 elements are for 2nd region,
+cfar_region_algo_type,uint32_t,1,0,CFAR per sub-region CFAR Algo type bitMsk for 8 sub-groups. 00b: CA-CFAR 01b: OS-CFAR 10b: SOGO-CFAR 11b: NR-CFAR,
+cfar_os_rnk_ratio,float,CFAR_MAX_GRP_NUM,"0.4444,0.4444,0.4444,0.4444,0.4444,0.4444,0.4444,0.4444",The scalar of related rank,
+cfar_os_rnk_sel,uint32_t,CFAR_MAX_GRP_NUM,"0,0,0,0,0,0,0,0","The mux control to select the final source of rank threshold, 0:tdec, 1: ratio * number of RCs",
+cfar_os_tdec,uint32_t,CFAR_MAX_GRP_NUM,"4,4,4,4,4,4,4,4",The deterministic  rank threshold,
+cfar_os_alpha,float,CFAR_MAX_GRP_NUM,"4.22,4.22,4.22,4.22,4.22,4.22,4.22,4.22",The scalar of CUT power before ranking,
+cfar_combine_dirs,uint32_t,1,0,# of combining directions. Value 0 means non-coherent combination,CFAR_combine_dirs
+cfar_combine_thetas,float,MAX_CFAR_DIRS,"0, 5, -5, 10, -10, 15, -15, 20, -20, 25, -25, 40, -40, 0, 0, 0",predefined combining directions of azimuth,CFAR_combine_thetas
+cfar_combine_phis,float,MAX_CFAR_DIRS,"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0",predefined combining directions of elevation,CFAR_combine_phis
+cfar_crswin_rng_size,uint32_t,1,5,cross window length alone range-gate,
+cfar_crswin_rng_skip,uint32_t,1,1,cross window guard size alone range-gate,
+cfar_crswin_vel_size,uint32_t,1,5,cross window length alone velocity-gate,
+cfar_crswin_vel_skip,uint32_t,1,1,cross window guard size alone velocity-gate,
+cfar_mimo_win,char,16,cheb,MIMO CFAR window type,CFAR_combine_window_type
+cfar_mimo_win_params,float,3,"30, 0, 0",MIMO CFAR window parameter,CFAR_combine_window_params
+cfar_noise_type,uint32_t,1,0xFF,8 region noise level output select register: 1 from CFAR local estimation; 0: from NVE,
+cfar_nr_alpha,float,CFAR_MAX_GRP_NUM,"10,10,10,10,10,10,10,10",Scalar of power of CUT before comparison or ranking,
+cfar_nr_beta1,float,CFAR_MAX_GRP_NUM,"0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25",Lower bound scalar in construction of set of reference powers,
+cfar_nr_beta2,float,CFAR_MAX_GRP_NUM,"4,4,4,4,4,4,4,4",Upper bound scalar in construction of set of reference powers,
+cfar_nr_rnk_ratio,float,CFAR_MAX_GRP_NUM,"0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25",The scalar of related rank,
+cfar_nr_rnk_sel,uint32_t,CFAR_MAX_GRP_NUM,"0,0,0,0,0,0,0,0",The mux control to select the final source of rank threshold in scheme 2,
+cfar_nr_scheme_sel,uint32_t,CFAR_MAX_GRP_NUM,"0,0,0,0,0,0,0,0",Select output from one of three schemes,
+cfar_nr_tdec,uint32_t,CFAR_MAX_GRP_NUM,"4,4,4,4,4,4,4,4",Pre-programmed Rank threshold for scheme 2,
+cfar_region_sep_rng,uint32_t,3,"1023, 1023, 1023",RDM region partition in range dimension,CFAR_region_sep_range
+cfar_region_sep_vel,uint32_t,8,"1023, 1023, 1023,1023, 1023, 1023,1023, 1023",RDM region partition in velocity dimension,
+cfar_sogo_alpha,float,CFAR_MAX_GRP_NUM,"15,15,15,15,15,15,15,15",The scalar of CUT's power before comparison,
+cfar_sogo_i,uint32_t,CFAR_MAX_GRP_NUM,"0,0,0,0,0,0,0,0",The i-th smallest over the averages from selected sides,
+cfar_sogo_mask,uint32_t,CFAR_MAX_GRP_NUM,"0xF,0xF,0xF,0xF,0xF,0xF,0xF,0xF",The mask control to select the sides of the cross window; bit0: negative range direction; bit1: positive range direction; bit2: negative velocity direction; bit3: positive velocity direction,
+cfar_ca_alpha,float,CFAR_MAX_GRP_NUM,"25,25,25,25,25,25,25,25",Scalar of CUT power before comparing,
+cfar_ca_n,uint32_t,CFAR_MAX_GRP_NUM,"2,2,2,2,2,2,2,2",Number of maximum to remove before averaging,
+doa_mode,uint32_t,1,0,2D_doa_mode 0/normal mode 1/combined mode 2/single shot mode,TwoD_mode
+doa_num_groups,uint32_t,1,1,bfm 2d on/off,BFM_num_groups
+doa_fft_mux,uint32_t,MAX_BFM_GROUP_NUM,"0x0000000F, 0x00001111, 0x00008421",normal mode/single shot mode doa rx antenna mux,BFM_fft_mux
+combined_doa_fft_mux,uint32_t,4,"0x0000000F, 0x000000F0, 0x00000F00, 0x0000F000",combined mode doa rx antenna mux,nopair_2d_h_fft_mux
+doa_method,uint32_t,1,0,selection bit for doa method 0-digital bfm 2-DML,
+doa_npoint,uint32_t,MAX_BFM_GROUP_NUM,"360,360,360",# of testing point of BFM/DML,BFM_npoint
+doa_samp_space,char,1,t,"doa sampling space. t: uniformly sampling in theta, u: uniformly sampling in sin(theta)",BFM_space
+doa_max_obj_per_bin,uint32_t,MAX_BFM_GROUP_NUM,"1,1,1",Max # of objects per bin,BFM_max_obj_per_bin
+bfm_peak_scalar,float,3,"0.1, 0.1, 0.1",Non/IPM mode peak scalar,BFM_peak_scalar
+bfm_noise_level_scalar,float,3,"30, 30, 30",multiobject noise level scalar for different SNR regime,
+bfm_snr_thres,uint32_t,2,"15,30",multiobject SNR regime threshold,
+bfm_az_left,float,1,-60,Left limit of BFM azimuth angle,BFM_left_max_angle
+bfm_az_right,float,1,60,Right limit of BFM azimuth angle,BFM_right_max_angle
+bfm_ev_up,float,1,10,Up limit of BFM elevated angle,BFM_up_max_angle
+bfm_ev_down,float,1,-10,Down limit of BFM elevated angle,BFM_down_max_angle
+doa_win,char,16,cheb,BFM window type,BFM_window_type
+doa_win_params,float,3,"30, 0, 0",BFM window parameter,BFM_window_params
+bfm_raw_search_step,uint32_t,1,1,raw search step for dbf work in OMP/IMP mode. Value 1 disables fine search,
+bfm_fine_search_range,uint32_t,1,20,fine search range for dbf work in OMP/IMP mode,
+bfm_iter_search,bool,1,FALSE,enable bit for iterative search for dbf,
+bfm_mode,uint32_t,1,0,1: OMP; 0: IPM,
+bfm_group_idx,uint32_t,1,0,group index when DBF works in single shot mode 0-azimuth 1-elevated 2-aided,BFM_one_group_idx
+ant_info_from_flash,bool,1,TRUE,whether taking antenna position/compensation from flash,NA
+ant_info_flash_addr,uint32_t,1,0x10000,Starting address where antenna postion/comp on flash,NA
+ant_pos,antenna_pos_t,MAX_ANT_ARRAY_SIZE,"{0, 0}, {.5, 0}, {1, 0}, {1.5, 0}, {2, 0}, {2.5, 0}, {3.0, 0}, {3.5, 0}, {4, 0}, {4.5, 0}, {5, 0}, {5.5, 0}, {6, 0}, {6.5, 0}, {7.0, 0}, {7.5, 0}",unit in wavelength,NA
+ant_comps,float,MAX_ANT_ARRAY_SIZE,"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0",unit in deg,BFM_phase_compensation
+bpm_mode,bool,1,FALSE,BPM mode,bpm_mode
+phase_scramble_on,uint8_t,1,0,phase scramble mode,INT_phase_scramble
+phase_scramble_init_state,uint32_t,1,0xDEADBEAF,phase scramble mode init state,INT_scramble_init_state
+phase_scramble_tap,uint32_t,1,0xC0000401,phase scramble mode tap value,INT_scramble_tap
+phase_scramble_comp,float,4,"180,180,180,180",phase compensation angle,INT_phase_scramble_phase_compensation
+freq_hopping_on,uint8_t,1,0,frequency hopping mode,INT_frequency_hopping_enable
+freq_hopping_init_state,uint32_t,1,0xBABEDEAD,frequency hopping mode init state,INT_frequency_hopping_init_state
+freq_hopping_tap,uint32_t,1,0xC0000401,frequency hopping mode tap value,INT_frequency_hopping_tap
+freq_hopping_deltaf,float,1,6,"frequency hopping, delta frequency, MHz",INT_frequency_hopping_fshift
+chirp_shifting_on,uint8_t,1,0,chirp shifting mode,INT_chirp_shifting_enable
+chirp_shifting_init_state,uint32_t,1,0x87654321,chirp shifting mode init state,INT_chirp_shifting_init_state
+chirp_shifting_init_tap,uint32_t,1,0xc0000401,chirp shifting mode tap  value,INT_chirp_shifting_init_tap
+chirp_shifting_delay,float,1,1,"chirp shifting mode delay, us",INT_chirp_shifting_delta
+fsm_on,bool,1,FALSE,function safety on/off,NA
+agc_mode,int32_t,1,0,AutoGainCtrl mode on/off,AGC_mode
+agc_code,uint32_t,AGC_CODE_ENTRY_NUM,"0x125, 0x91, 0x83, 0x3, 0x88, 0x81, 0x11, 0x81, 0x81, 0x3, 0x1, 0x1, 0x3",store AGC_init_gain and clip1 and clip2 table bit0 LNA,NA
+agc_tia_thres,float,1,0.5,threshold for saturation decision of TIA,AGC_TIA_thres
+agc_vga1_thres,float,1,0.8,threshold for saturation decision of VGA1,AGC_VGA1_thres
+agc_vga2_thres,float,1,0.8,threshold for saturation decision of VGA2,AGC_VGA2_thres
+agc_align_en,bool,1,FALSE,AGC align mode on/off,AGC_align_mode_on
+adc_comp_en,bool,1,FALSE,If enable adc compensation by left shifting when agc mode is on,DEF_ADC_comp_shift_on
+rf_tia_gain,uint8_t,1,2,TIA gain,NA
+rf_vga1_gain,uint8_t,1,5,VGA1 gain,NA
+rf_vga2_gain,uint8_t,1,3,VGA2 gain,NA
+rf_hpf1,uint8_t,1,2,Highpass 1 setting,NA
+rf_hpf2,uint8_t,1,1,Highpass 2 setting,NA
+de_vel_amb,bool,1,FALSE,velocity ambiguity on/off (multi-frame),FFT_de_vel_amb
+track_fps,uint8_t,1,20,Frame per second,NA
+track_fov_az_left,float,1,-60,angle threshold to drop unstable objects in deg,NA
+track_fov_az_right,float,1,60,angle threshold to drop unstable objects in deg,NA
+track_fov_ev_down,float,1,-8,angle threshold to drop unstable objects in deg,NA
+track_fov_ev_up,float,1,8,angle threshold to drop unstable objects in deg,NA
+track_near_field_thres,float,1,10,threshold to drop unstable near-field objects in meter,NA
+track_capture_delay,float,1,0.15,time delay between first appear and stable tracking in second,NA
+track_drop_delay,float,1,0.5,time delay between first missing and tracking drop in second,NA
+track_vel_pos_ind_portion,float,1,0.5,portion of velocity indices are used for positive velocity,NA
+track_obj_snr_sel,uint8_t,1,0,select object SNR type for track - 0: Ratio of DoA peak power to noise / 1: Ratio of RXs FFT average power to noise/ 2: absolute RXs FFT average power in dB,NA
+tx_phase_value,uint32_t,4,"45, 45, 45, 45",Tx phase value for each Channel - 0 / 22 / 45 / 67 / 90 / 112 / 135 / 157 / 180 / 202 / 225 / 247 / 270 / 292 / 315 / 337,NA
+spk_en,bool,1,FALSE,enable interference mitigation,spikes_rmv_en
+spk_buf_len,uint8_t,1,4,buffer length for detecting spikes,abs_diff_buf_len
+spk_set_zero,bool,1,FALSE,set spikes to zero,set_spikes_zero
+spk_ovr_num,uint8_t,1,0,overflow samples threshold to claim spike is detected,NA
+spk_thres_dbl,bool,1,FALSE,double threshold for detecting spikes,diff_thres_dbl_en
+spk_min_max_sel,bool,1,FALSE,choose smaller estimated d_max,choose_min_d_max
+zero_doppler_cancel,bool,1,FALSE,remove static objects from 2DFFT results,Zero_doppler_cancl_en
+anti_velamb_en,bool,1,FALSE,velocity de-ambiguity (chirp delay mode),
+anti_velamb_delay,uint32_t,1,10,velocity de-ambiguity: delay between the extra chirp and normal chirp in virtual group 0,VELAMB_CS_delay
+anti_velamb_qmin,int32_t,1,-2,velocity de-ambiguity: minium ambiguity factor,VELAMB_CS_Q_min
+high_vel_comp_en,bool,1,TRUE,compensate range and velocity when object speed is high,NA
+high_vel_comp_method,uint8_t,1,0,method of compensation - 0: compensate automatically  1: compensate by user defined value,NA
+vel_comp_usr,float,1,0,user defined compensation value for velocity,NA
+rng_comp_usr,float,1,0,user defined compensation value for range,NA
+dml_2dsch_start,uint32_t,2,"0, 0",dml: starting point of angle searching,DML_coarse_sch_start
+dml_2dsch_step,uint32_t,2,"16, 8",dml: pace of coarse searching,DML_asin_refine_n
+dml_2dsch_end,uint32_t,2,"359, 359",dml: ending point of angle searching,DML_coarse_sch_end
+dml_extra_1d_en,bool,2,"true, true",dml: enabler for the extra 1d-dml,
+dml_p1p2_en,bool,2,"true, true",dml: enabler for coef2 and coef3 in RNE,
+dml_respwr_coef,float,10,"0, 0, 0.1, -1, 0, 0, 0, 0.1, -1, 0",dml: coefficients for RNE,
+acc_rng_hw,bool,1,FALSE,knob for range interpolation after CFAR for accuracy improvement,CFAR_accuracy_rng_hw
+acc_vel_hw,bool,1,FALSE,knob for velocity interpolation after CFAR for accuracy improvement,CFAR_accuracy_vel_hw
+acc_angle_hw,bool,1,FALSE,knob for angle interpolation after DBF for accuracy improvement,BFM_accuracy_hw
+cas_obj_merg_typ,uint8_t,1,2,cascade master and slave object infos merge type - 0: and merge/ 1: loose and merge/ 2: slave based merge,NA
+sv_read_from_flash,bool,1,FALSE,read steering vector from flash or generate sv from ant_pos - FALSE: sv from ant_pos/ TRUE: sv from flash,NA

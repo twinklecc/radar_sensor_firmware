@@ -1,0 +1,48 @@
+CALTERAH_EMU_ROOT = $(CALTERAH_COMMON_ROOT)/emu
+
+CALTERAH_EMU_CSRCDIR = $(CALTERAH_EMU_ROOT)
+CALTERAH_EMU_ASMSRCDIR = $(CALTERAH_EMU_ROOT)
+
+# find all the source files in the target directories
+CALTERAH_EMU_CSRCS = $(call get_csrcs, $(CALTERAH_EMU_CSRCDIR))
+CALTERAH_EMU_ASMSRCS = $(call get_asmsrcs, $(CALTERAH_EMU_ASMSRCDIR))
+
+# get object files
+CALTERAH_EMU_COBJS = $(call get_relobjs, $(CALTERAH_EMU_CSRCS))
+CALTERAH_EMU_ASMOBJS = $(call get_relobjs, $(CALTERAH_EMU_ASMSRCS))
+CALTERAH_EMU_OBJS = $(CALTERAH_EMU_COBJS) $(CALTERAH_EMU_ASMOBJS)
+
+# get dependency files
+CALTERAH_EMU_DEPS = $(call get_deps, $(CALTERAH_EMU_OBJS))
+
+
+# genearte library
+CALTERAH_EMU_LIB = $(OUT_DIR)/lib_calterah_emu.a
+
+COMMON_COMPILE_PREREQUISITES += $(CALTERAH_EMU_ROOT)/emu.mk
+
+# library generation rule
+$(CALTERAH_EMU_LIB): $(CALTERAH_EMU_OBJS)
+	$(TRACE_ARCHIVE)
+	$(Q)$(AR) $(AR_OPT) $@ $(CALTERAH_EMU_OBJS)
+
+# specific compile rules
+# user can add rules to compile this library
+# if not rules specified to this library, it will use default compiling rules
+.SECONDEXPANSION:
+$(CALTERAH_EMU_COBJS): $(OUT_DIR)/%.o : %.c $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(COMPILE_OPT) $(COMPILE_HW_OPT) $< -o $@
+
+.SECONDEXPANSION:
+$(CALTERAH_EMU_ASMOBJS): $(OUT_DIR)/%.o : %.s $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(ASM_OPT) $(COMPILE_HW_OPT) $< -o $@
+
+CALTERAH_COMMON_CSRC += $(CALTERAH_EMU_CSRCS)
+CALTERAH_COMMON_ASMSRCS += $(CALTERAH_EMU_ASMSRCS)
+
+CALTERAH_COMMON_COBJS += $(CALTERAH_EMU_COBJS)
+CALTERAH_COMMON_ASMOBJS += $(CALTERAH_EMU_ASMOBJS)
+
+CALTERAH_COMMON_LIBS += $(CALTERAH_EMU_LIB)

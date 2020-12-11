@@ -1,0 +1,48 @@
+FREERTOS_TICK_ROOT = $(FREERTOS_COMMON_ROOT)/tick
+
+FREERTOS_TICK_CSRCDIR += $(FREERTOS_TICK_ROOT)
+
+# find all the source files in the target directories
+FREERTOS_TICK_CSRCS = $(call get_csrcs, $(FREERTOS_TICK_CSRCDIR))
+FREERTOS_TICK_ASMSRCS = $(call get_asmsrcs, $(FREERTOS_TICK_ASMSRCDIR))
+
+# get object files
+FREERTOS_TICK_COBJS = $(call get_relobjs, $(FREERTOS_TICK_CSRCS))
+FREERTOS_TICK_ASMOBJS = $(call get_relobjs, $(FREERTOS_TICK_ASMSRCS))
+FREERTOS_TICK_OBJS = $(FREERTOS_TICK_COBJS) $(FREERTOS_TICK_ASMOBJS)
+
+# get dependency files
+FREERTOS_TICK_DEPS = $(call get_deps, $(FREERTOS_TICK_OBJS))
+
+
+# genearte library
+FREERTOS_TICK_LIB = $(OUT_DIR)/lib_freertos_tick.a
+
+COMMON_COMPILE_PREREQUISITES += $(FREERTOS_TICK_ROOT)/tick.mk
+
+# library generation rule
+$(FREERTOS_TICK_LIB): $(FREERTOS_TICK_OBJS)
+	$(TRACE_ARCHIVE)
+	$(Q)$(AR) $(AR_OPT) $@ $(FREERTOS_TICK_OBJS)
+
+# specific compile rules
+# user can add rules to compile this library
+# if not rules specified to this library, it will use default compiling rules
+.SECONDEXPANSION:
+$(FREERTOS_TICK_COBJS): $(OUT_DIR)/%.o : %.c $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(COMPILE_OPT) $< -o $@
+
+.SECONDEXPANSION:
+$(FREERTOS_TICK_ASMOBJS): $(OUT_DIR)/%.o : %.s $$(COMMON_COMPILE_PREREQUISITES)
+	$(TRACE_COMPILE)
+	$(Q)$(CC) -c $(ASM_OPT) $< -o $@
+
+CALTERAH_COMMON_CSRC += $(FREERTOS_TICK_CSRCS)
+CALTERAH_COMMON_ASMSRCS += $(FREERTOS_TICK_ASMSRCS)
+
+CALTERAH_COMMON_COBJS += $(FREERTOS_TICK_COBJS)
+CALTERAH_COMMON_ASMOBJS += $(FREERTOS_TICK_ASMOBJS)
+
+CALTERAH_COMMON_LIBS += $(FREERTOS_TICK_LIB)
+CALTERAH_INC_DIR += $(FREERTOS_TICK_CSRCDIR)

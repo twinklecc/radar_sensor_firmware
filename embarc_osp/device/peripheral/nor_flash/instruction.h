@@ -1,0 +1,52 @@
+#ifndef _INSTRUCTION_H_
+#define _INSTRUCTION_H_
+
+#define CMD_READ_ID			(0x9F)
+#define CMD_READ_JEDEC			(0x5A)
+#define CMD_QUAD_ID			(0xAF)
+#define CMD_READ_RSTS1			(0x05)
+#define CMD_READ_RSTS2			(0x07)
+#define CMD_READ_RCONFIG		(0x35)
+#define CMD_READ_ANY_REG		(0x65)
+#define CMD_WRITE_STS1_CFG1		(0x01)
+#define CMD_WRITE_DISABLE		(0x04)
+#define CMD_WRITE_ENABLE		(0x06)
+#define CMD_WRITE_ANY_REG		(0x71)
+#define CMD_CLEAR_STS1_EP		(0x30)
+#define CMD_CLEAR_STS1			(0x82)
+#define CMD_4BYTE_ADDR			(0xB7)
+#define CMD_SET_BURST_LEN		(0xC0)
+#define CMD_EVALUATE_ERASE_STS		(0xD0)
+#define CMD_ECC_READ			(0x19)
+#define CMD_4ECC_READ			(0x18)
+#define CMD_READ_DLP			(0x41)
+#define CMD_PROG_NV_DLR			(0x43)
+#define CMD_WRITE_V_DLR			(0x4A)
+
+#define CMD_READ			(0x03)
+//#define CMD_4READ			(0x13)
+#define CMD_FAST_READ			(0x0B)
+//#define CMD_4FAST_READ		(0x0C)
+#define CMD_QO_READ			(0x6B)
+#define CMD_Q_READ			(0xEB)
+//#define CMD_Q_4READ			(0xEC)
+
+#define CMD_PAGE_PROG			(0x02)
+#define CMD_4PAGE_PROG			(0x12)
+#define CMD_QPP_PROG			(0x32)
+
+#define CMD_PARAM_ERASE			(0x20)
+#define CMD_4PARAM_ERASE		(0x21)
+#define CMD_SE				(0xD8)
+#define CMD_4SE				(0xDC)
+
+#define CMD_RST_ENABLE			(0x66)
+#define CMD_RST				(0x99)
+#define CMD_LEGACY_RST			(0xF0)
+#define CMD_MODE_BIT_RST		(0xFF)
+
+#define CMD_PGSP			(0x85)
+#define CMD_PGRS			(0x8A)
+#define CMD_ERSP			(0x75)
+#define CMD_ERRS			(0x7A)
+#endif

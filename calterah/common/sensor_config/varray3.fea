@@ -1,0 +1,16 @@
+[SETUP]
+fmcw_startfreq = 78.5
+fmcw_bandwidth = 180
+fmcw_chirp_rampup = 18
+fmcw_chirp_down = 1
+fmcw_chirp_period = 22
+nchirp = 384
+adc_freq = 25
+adc_sample_start = 2
+adc_sample_end = 18
+tx_groups = 0x0001, 0x0010, 0x0100, 0x0000
+vel_nfft = 128
+doa_fft_mux = 0x0000000F, 0x00000128, 0x00008421 
+rng_fft_scalar            = 255
+vel_fft_scalar            = 63
+agc_code                  = 0xd3, 0xd3, 0xd3, 0xd3, 0xd3, 0xd3, 0xd3, 0xd3, 0xd3, 0xd3, 0xd3, 0xd3, 0xd3
