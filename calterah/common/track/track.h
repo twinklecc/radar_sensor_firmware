@@ -6,6 +6,7 @@
 #ifndef CALTERAH_TRACK_H
 #define CALTERAH_TRACK_H
 
+
 #include "track_common.h"
 #include "radar_sys_params.h"
 #include "calterah_limits.h"
@@ -22,6 +23,7 @@
 /* so the max array num is [5 * (2 * MAX_OBJ_NUM + 1)] */
 #define MAX_OBJ_NUM            1024
 #define MAX_ARRAY_NUM          (5 * MAX_OBJ_NUM + 2)
+
 
 typedef void (*track_if_t)(void *data, void *ctx);
 typedef void (*track_frame_interval_t)(void *data, track_float_t delta);

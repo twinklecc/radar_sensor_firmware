@@ -25,7 +25,7 @@ include $(CALTERAH_COMMON_ROOT)/spi_master/spi_master.mk
 # List of Features
 FMCW_SDM_FREQ ?= 400
 INTER_FRAME_POWER_SAVE ?= 1
-TRK_CONF_3D ?= 0
+TRK_CONF_3D ?= 1
 MAX_OUTPUT_OBJS ?= 64
 NUM_VARRAY ?= 1
 NUM_FRAME_TYPE ?= 1
