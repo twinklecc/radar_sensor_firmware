@@ -6,6 +6,7 @@
 #ifndef TRACK_COMMON_H
 #define TRACK_COMMON_H
 
+
 #include "math.h"
 
 #ifndef TRACK_TEST_MODE
@@ -28,6 +29,10 @@
 #endif
 
 /*--- DEFINES ------------------------*/
+#ifndef TRK_CONF_3D
+#define TRK_CONF_3D 1
+#endif
+
 #ifndef M_PI
 #define M_PI                     3.1415926536
 #endif
@@ -121,3 +126,7 @@ typedef struct {
 } track_header_output_t;
 
 #endif
+
+
+
+
